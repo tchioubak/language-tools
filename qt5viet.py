@@ -10,8 +10,10 @@ class MyWindow(QWidget):
     def __init__(self):
         super().__init__()
         self.courant=' '
-        self.combo_choix={ unicodedata.name(c) : c for c in 
-            "\u0300\u0301\u0302\u0304\u0305\u0306\u0309\u0323\u031b\u0111" }
+        self.combo_choix={}
+        self.combo_choix['-- NOOP --'] = None
+        self.combo_choix.update({ unicodedata.name(c) : c for c in 
+            "\u0300\u0301\u0303\u0306\u0309\u0323\u031b\u0111" })
         self.initUI()
 
     def initUI(self):
@@ -50,7 +52,8 @@ class MyWindow(QWidget):
         cle = self.comboBox.currentText()
         val = self.combo_choix[cle]
         self.courant = val
-        print("Option sélectionnée:", cle, val)
+        if not val :
+            return
         texte_courant = self.textEdit.text()
         self.textEdit.setText(texte_courant + val)
 
